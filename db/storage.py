@@ -1,5 +1,13 @@
 from sqlite3 import connect
-
+# Что можно вытащить из сообщения:
+# Message.message_id (id сообщения)
+# Message.date (дата и время отправки сообщения)
+# Message.text (текст сообщения)
+# Message.html_text (забираем текст с htm-тегами)
+# Message.from_user (username, first_name, last_name, full_name, is_premium и прочее)
+# Message.chat (id, type, title, username/channel) То есть мы можем сделать примерно такой словарь:
+# data_task = {'user_id': message.from_user.id, 'full_name': message.from_user.full_name,
+# 'username': message.from_user.username, 'message_id': message.message_id, 'date': get_msc_date(message.date)}
 
 class DatabaseManager:
     def __init__(self, path='db/database.db'):
@@ -12,18 +20,9 @@ class DatabaseManager:
         self.add_new_info(
             'CREATE TABLE IF NOT EXISTS users ('
             'user_id INTEGER PRIMARY KEY,'
-            'orders TEXT,'
-            'discount BLOB,'
-            'buy_date TEXT,'
-            'finish_date TEXT)'
-        )
-        self.add_new_info(
-            'CREATE TABLE IF NOT EXISTS questions ('
-            'qa_id INTEGER,'
-            'user_id INTEGER,'
-            'FOREIGN KEY (user_id)  REFERENCES users (user_id)'
-            'question TEXT NOT NULL,'
-            'answer TEXT)'
+            'tg_id INTEGER,'
+            'user_name TEXT,'
+            'price INTEGER)'
         )
 
     # Пример заполнения: 'INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
@@ -38,7 +37,7 @@ class DatabaseManager:
     # Обновляем информацию (например, добавляем наш ответ на вопрос)
     def update_info(self, arg, values=None):  # 'UPDATE Users SET age = ? WHERE username = ?', (29, 'newuser')
         if values is None:
-            pass
+            self.cursor.execute(arg)
         else:
             self.cursor.execute(arg, values)
         self.conn.commit()
@@ -46,7 +45,7 @@ class DatabaseManager:
     # Выбираем первого пользователя
     def fetchone(self, arg, values=None):  # 'SELECT username, age FROM Users WHERE age > ?', (25,)
         if values is None:
-            pass
+            self.cursor.execute(arg)
         else:
             self.cursor.execute(arg, values)
         return self.cursor.fetchone()
@@ -54,7 +53,7 @@ class DatabaseManager:
     # Выбираем всех пользователей
     def fetchall(self, arg, values=None):  # 'SELECT username, age FROM Users WHERE age > ?', (25,)
         if values is None:
-            pass
+            self.cursor.execute(arg)
         else:
             self.cursor.execute(arg, values)
         return self.cursor.fetchall()

@@ -1,49 +1,31 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-# InlineKeyboardMarkup: для разметки инлайн-клавиатуры. Разметка определяет расположение кнопок
-# и их взаимодействие с пользователем.
-# InlineKeyboardButton: отдельная кнопка на клавиатуре: можем задавать текст кнопки и действие при нажатии
-# WebAppInfo: создание кнопок, открывающих веб-приложения внутри ТГ.
-# Для интеграции внешних веб-сервисов/приложений с ботом.
-# InlineKeyboardBuilder: инструмент для создания инлайн-клавиатур.
 
-
-def ease_link_kb():  # создает и возвращает инлайн-клавиатуры с кнопками, на которые навешены ссылки
-    inline_kb_list = [
-        [InlineKeyboardButton(text="Мой хабр", url='https://habr.com/ru/users/yakvenalex/')],
-        [InlineKeyboardButton(text="Мой Telegram", url='tg://resolve?domain=yakvenalexx')],
-        [InlineKeyboardButton(text="Веб приложение", web_app=WebAppInfo(url="https://tg-promo-bot.ru/questions"))]
+def keyboard_with_links():
+    list_of_links = [
+        [InlineKeyboardButton(text="Написать Юле", url='https://t.me/julliru')],
+        [InlineKeyboardButton(text="Написать Стасе", url='https://t.me/StasyaSher')],
+        [InlineKeyboardButton(text="Написать Ане", url='https://t.me/AnnLinnden')],
+        [InlineKeyboardButton(text="Полистать канал агентства", url='https://t.me/agency4x')],
+        [InlineKeyboardButton(text="Посмотреть сайт 4X", url='https://agency4x.ru/')]
     ]
-    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+    return InlineKeyboardMarkup(inline_keyboard=list_of_links)
 
 
-def create_qst_inline_kb(questions: dict) -> InlineKeyboardMarkup:
-    builder = InlineKeyboardBuilder()
-    # Добавляем кнопки вопросов
-    for question_id, question_data in questions.items():
-        builder.row(
-            InlineKeyboardButton(
-                text=question_data.get('qst'),
-                callback_data=f'qst_{question_id}'
-            )
-        )
-    # Добавляем кнопку "На главную"
-    builder.row(
-        InlineKeyboardButton(
-            text='На главную',
-            callback_data='back_home'  # нужно написать обработчик
-        )
-    )
-    # Настраиваем размер клавиатуры
-    builder.adjust(1)  # делаем строку из такого количества кнопок, которое указано в скобках
-    return builder.as_markup()  # возвращаем готовый объект с клавиатурой
-
-
-def cmd_random():
+def button_for_pay():
     builder = InlineKeyboardBuilder()
     builder.add(InlineKeyboardButton(
         text="Нажми меня",
-        callback_data="random_value")
+        pay=True)  # Обязательно эта кнопка должна быть в сообщении с выставлением счета (инвойс)
     )
     return builder.as_markup()
+
+
+def admin_keyboard():
+    buttons = [
+        [InlineKeyboardButton(text='Сколько человек оплатили?', callback_data='user_amount')],
+        [InlineKeyboardButton(text='Кто оплатил?', callback_data='buyers_names')],
+        [InlineKeyboardButton(text='Сколько заработали?', callback_data='earned_money')],
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
