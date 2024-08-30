@@ -1,8 +1,7 @@
 import asyncio
 import logging
-from aiogram import Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault
-from config import bot
+from config import bot, dp
 from handlers.user_handlers import user_router
 from handlers.admin_handlers import admin_router
 from db import DatabaseManager
@@ -11,9 +10,7 @@ db = DatabaseManager('db/database.db')
 logging.basicConfig(level=logging.INFO)  # Включаем логирование: будем записывать логи событий и ошибок
 logger = logging.getLogger(__name__)
 
-# диспетчер - корневой роутер
-# регистрирует обработчики, фильтрует события из ТГ и решает, какой обработчик будет включен
-dp = Dispatcher()
+
 
 
 async def set_commands():

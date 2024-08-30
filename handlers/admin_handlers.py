@@ -23,17 +23,17 @@ async def greeting_admin(message: Message):
 # Подтягиваем функции из storage, обрабатываем и выдаем ответ
 @admin_router.callback_query(F.data == "user_amount")
 async def show_user_amount(callback: CallbackQuery):
-    await callback.message.answer('сюда - вывод функции, которая забирает инфу из хранилища')
+    await callback.message.answer('Когда у нас появятся пользователи, я тебе расскажу, сколько их.')
     await callback.answer()  # Чтобы не висели часики
 
 
 @admin_router.callback_query(F.data == 'buyers_names')
 async def show_buyers_names(callback: CallbackQuery):
-    await callback.message.answer('вывод функции')
+    await callback.message.answer('Я назову тебе имена всех людей, кто принес нам денежку в боте.')
     await callback.answer()
 
 
-@admin_router.callback_query(F.data == 'earned money')
+@admin_router.callback_query(F.data == 'earned_money')
 async def show_earned_money(callback: CallbackQuery):
-    await callback.message.answer('вывод функции')
+    await callback.message.answer('Я расскажу тебе, сколько мы заработали на этом боте. Пока 0.')
     await callback.answer()
