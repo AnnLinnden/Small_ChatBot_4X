@@ -1,5 +1,4 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def keyboard_with_links():
@@ -11,15 +10,6 @@ def keyboard_with_links():
         [InlineKeyboardButton(text="Посмотреть сайт 4X", url='https://agency4x.ru/')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=list_of_links)
-
-
-def button_for_pay():
-    builder = InlineKeyboardBuilder()
-    builder.add(InlineKeyboardButton(
-        text="Нажми меня",
-        pay=True)  # Обязательно эта кнопка должна быть в сообщении с выставлением счета (инвойс)
-    )
-    return builder.as_markup()
 
 
 def admin_keyboard():

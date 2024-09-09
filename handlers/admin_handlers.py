@@ -1,6 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import (Message, BotCommand, CallbackQuery, ReplyKeyboardRemove,
-                           BotCommandScopeDefault)
+from aiogram.types import Message, CallbackQuery
 import db
 from config import ADMINS
 from keyboards.inline_keys import admin_keyboard
@@ -19,21 +18,28 @@ async def greeting_admin(message: Message):
         )
 
 
-# Можем предложить набор опций (например, посмотреть, сколько человек всего в базе, сколько купили, сколько нет и пр.)
-# Подтягиваем функции из storage, обрабатываем и выдаем ответ
 @admin_router.callback_query(F.data == "user_amount")
 async def show_user_amount(callback: CallbackQuery):
-    await callback.message.answer('Когда у нас появятся пользователи, я тебе расскажу, сколько их.')
+    user_amount = await database_manager.check_user_amount()
+    await callback.message.answer(f'{user_amount}')
     await callback.answer()  # Чтобы не висели часики
 
 
 @admin_router.callback_query(F.data == 'buyers_names')
 async def show_buyers_names(callback: CallbackQuery):
-    await callback.message.answer('Я назову тебе имена всех людей, кто принес нам денежку в боте.')
+    buyers_usernames = await database_manager.get_usernames()
+    if buyers_usernames == []:
+        await callback.message.answer(f'Пока никто не оплатил')
+    else:
+        await callback.message.answer(f'Покупку оформили: {buyers_usernames}')
     await callback.answer()
 
 
 @admin_router.callback_query(F.data == 'earned_money')
 async def show_earned_money(callback: CallbackQuery):
-    await callback.message.answer('Я расскажу тебе, сколько мы заработали на этом боте. Пока 0.')
+    earned_money = await database_manager.get_earned_money()
+    if not earned_money:
+        await callback.message.answer('Пока мы ничего не заработали')
+    else:
+        await callback.message.answer(f'Мы заработали {earned_money} ★')
     await callback.answer()

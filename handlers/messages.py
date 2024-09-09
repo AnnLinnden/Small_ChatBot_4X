@@ -1,8 +1,5 @@
-import asyncio
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.utils.chat_action import ChatActionSender
 from config import bot
-
 
 
 class Messages:
@@ -23,8 +20,12 @@ class Messages:
                                   'первое сообщение ты получишь уже сегодня (прям щас вот), '
                                   'а дальше по одному каждый <s>божий</s> будний день будет прилетать. '
                                   'Удачи, юный падаван.\n'
-                                  'Ебашь. \nНо помни. \nУпарываться не обязательно.')
+                                  'Ебашь. \nНо помни. \nУпарываться не обязательно.'
+                                  'ID покупки:')
         self.pay_support_message = 'Здесь про то, куда бежать, если с платежом проблемы'
+        self.payment_error = ('Наш бот утверждает, что вы уже оплачивали этот продукт. '
+                              'Нажмите /paysupport, разберемся вместе!')
+        # self.money_refund_message = 'Для тех, кто запрашивает возврат денег'
 
     async def message_day_1(self, chat_id):
         await bot.send_message(chat_id=chat_id, text='Это первая цепочка. Она прилетит через минутку '

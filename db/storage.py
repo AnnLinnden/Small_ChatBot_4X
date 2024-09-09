@@ -1,62 +1,52 @@
-from sqlite3 import connect
-# Что можно вытащить из сообщения:
-# Message.message_id (id сообщения)
-# Message.date (дата и время отправки сообщения)
-# Message.text (текст сообщения)
-# Message.html_text (забираем текст с htm-тегами)
-# Message.from_user (username, first_name, last_name, full_name, is_premium и прочее)
-# Message.chat (id, type, title, username/channel) То есть мы можем сделать примерно такой словарь:
-# data_task = {'user_id': message.from_user.id, 'full_name': message.from_user.full_name,
-# 'username': message.from_user.username, 'message_id': message.message_id, 'date': get_msc_date(message.date)}
+import aiosqlite
+
 
 class DatabaseManager:
-    def __init__(self, path='db/database.db'):
-        self.conn = connect(path)  # подключаемся к базе данных
-        self.conn.execute('pragma foreign_keys = on')
-        self.conn.commit()  # сохраняем изменения
-        self.cursor = self.conn.cursor()  # Курсор позволяет отправлять SQL-запросы базе данных и получать результаты
+    def __init__(self):
+        self.path = 'db/database.db'
 
-    def create_tables(self):
-        self.add_new_info(
-            'CREATE TABLE IF NOT EXISTS users ('
-            'user_id INTEGER PRIMARY KEY,'
-            'tg_id INTEGER,'
-            'user_name TEXT,'
-            'price INTEGER)'
-        )
+    async def initialize_database(self):
+        async with aiosqlite.connect(self.path) as db:
+            await db.execute(
+                'CREATE TABLE IF NOT EXISTS users ('
+                'user_telegram_id INTEGER PRIMARY KEY,'
+                'username TEXT,'
+                'price INTEGER)'
+            )
+            await db.commit()
 
-    # Пример заполнения: 'INSERT INTO Users (username, email, age) VALUES (?, ?, ?)',
-    # ('newuser', 'newuser@example.com', 28)
-    def add_new_info(self, arg, values=None):
-        if values is None:
-            self.cursor.execute(arg)
-        else:
-            self.cursor.execute(arg, values)
-        self.conn.commit()
+    async def check_user_not_paid_before(self, user_telegram_id: int):
+        async with aiosqlite.connect(self.path) as db:
+            cursor = await db.execute("SELECT * FROM users WHERE user_telegram_id = ?", (user_telegram_id, ))
+            row = await cursor.fetchone()
+            if row is None:
+                return True
+            else:
+                return False
 
-    # Обновляем информацию (например, добавляем наш ответ на вопрос)
-    def update_info(self, arg, values=None):  # 'UPDATE Users SET age = ? WHERE username = ?', (29, 'newuser')
-        if values is None:
-            self.cursor.execute(arg)
-        else:
-            self.cursor.execute(arg, values)
-        self.conn.commit()
+    async def add_user(self, user_telegram_id: int, username: str, price: int):
+        async with aiosqlite.connect(self.path) as db:
+            await db.execute(
+                'INSERT INTO users (user_telegram_id, username, price)'
+                'VALUES (?, ?, ?)',
+                (user_telegram_id, username, price))
+            await db.commit()
 
-    # Выбираем первого пользователя
-    def fetchone(self, arg, values=None):  # 'SELECT username, age FROM Users WHERE age > ?', (25,)
-        if values is None:
-            self.cursor.execute(arg)
-        else:
-            self.cursor.execute(arg, values)
-        return self.cursor.fetchone()
+    async def check_user_amount(self):
+        async with aiosqlite.connect(self.path) as db:
+            cursor = await db.execute("SELECT * FROM users")
+            rows = await cursor.fetchall()
+            return len(rows)
 
-    # Выбираем всех пользователей
-    def fetchall(self, arg, values=None):  # 'SELECT username, age FROM Users WHERE age > ?', (25,)
-        if values is None:
-            self.cursor.execute(arg)
-        else:
-            self.cursor.execute(arg, values)
-        return self.cursor.fetchall()
+    async def get_usernames(self):
+        async with aiosqlite.connect(self.path) as db:
+            cursor = await db.execute("SELECT username FROM users")
+            usernames = await cursor.fetchall()
+            return usernames
 
-    def __del__(self):
-        self.conn.close()
+    async def get_earned_money(self):
+        async with aiosqlite.connect(self.path) as db:
+            cursor = await db.execute("SELECT SUM (price) FROM users")
+            earned_money = await cursor.fetchone()
+            return earned_money[0]
+
