@@ -1,4 +1,4 @@
 .env
 db/database.db
 __pycache__
-handlers/messages.py
+jobs.sqlite
