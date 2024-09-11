@@ -13,7 +13,7 @@ class ScheduleMessages:
 
     def create_list_of_send_dates(self, count_of_days):
         today = datetime.today()
-        send_dates = [today + timedelta(seconds=5)]
+        send_dates = [today + timedelta(seconds=5)]  # предложение оплатить придет через 5с после стартового сообщения
         count_of_days -= 1
         today += BREAK_BETWEEN_MESSAGES
         while count_of_days > 0:

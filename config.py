@@ -13,11 +13,11 @@ load_dotenv()
 TOKEN = getenv("TOKEN")
 ADMINS_LIST = getenv("ADMINS")
 ADMINS = [int(admin_id) for admin_id in ADMINS_LIST.split(',')]
-BREAK_BETWEEN_MESSAGES = timedelta(days=1)
-PRODUCT_PRICE = 1
+BREAK_BETWEEN_MESSAGES = timedelta(days=1)  # Перерыв между сообщениями
+PRODUCT_PRICE = 1  # Стоимость вашего продукта
 PRODUCT_NAME = 'Название продукта'
 PRODUCT_DESCRIPTION = 'Описание продукта'
-PAYMENT_EFFECT = "5044134455711629726"
+PAYMENT_EFFECT = "5044134455711629726"  # Эффект, который увидит пользователь после оплаты. Ниже варианты
 # "5104841245755180586",  # 🔥
 # "5107584321108051014",  # 👍
 # "5044134455711629726",  # ❤️
