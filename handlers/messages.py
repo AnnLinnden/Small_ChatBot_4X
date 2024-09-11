@@ -4,71 +4,49 @@ from config import bot
 
 class Messages:
     def __init__(self):
-        self.starting_message = ('Привет! У нас тут классный бот. Пока он мало что может, но в будущем здесь появится '
-                                 'охренительный контент, честное слово\n'
+        self.starting_message = ('Стартовое сообщение\n'
                                  'Кстати, вот наши контакты (все кнопки работают, попробуй):')
-        self.message_before_pay = ('Посмотрел первое сообщение? '
-                                   '<tg-spoiler>Ну наверняка, прошло-то несколько секунд всего.</tg-spoiler>\n'
-                                   'Короче, тут такое дело. <b>Мы бы очень хотели денег.</b> '
-                                   'Поэтому, пожалуйста, нажми /buy '
-                                   '(тут будет красивая кнопочка с ценой и финтифлюшками, но позже)')
-        self.payment_explanation = ('Пользователи могут приобретать Stars в Telegram с помощью стандартных покупок '
-                                    'в приложениях Apple и Google или через @PremiumBot, а затем использовать их'
-                                    'для покупки цифровых товаров и услуг у вас. Если у тебя нет звезд, не переживай, '
-                                    'телега предложит их купить прямо перед оформлением заказа')
-        self.message_after_pay = ('Благодарим за оплату нихуя (ибо ничего пока и нет) и говорим: '
-                                  'первое сообщение ты получишь уже сегодня (прям щас вот), '
-                                  'а дальше по одному каждый <s>божий</s> будний день будет прилетать. '
-                                  'Удачи, юный падаван.\n'
-                                  'Ебашь. \nНо помни. \nУпарываться не обязательно.'
-                                  'ID покупки:')
-        self.pay_support_message = 'Здесь про то, куда бежать, если с платежом проблемы'
+        self.message_before_pay = 'Сообщение перед покупкой. Пожалуйста, нажмите /buy =)'
+        self.payment_explanation = ('Вы можете купить Stars в Telegram с помощью стандартных покупок '
+                                    'в приложениях Apple и Google или через @PremiumBot. Если у вас нет звезд, '
+                                    'Telegram предложит их купить перед оформлением заказа')
+        self.message_after_pay = ('Сообщение после оплаты.\n'
+                                  'ID покупки: (подставится автоматически)')
+        self.pay_support_message = 'Сообщение о том, что делать, если с платежом возникли проблемы'
         self.payment_error = ('Наш бот утверждает, что вы уже оплачивали этот продукт. '
                               'Нажмите /paysupport, разберемся вместе!')
         # self.money_refund_message = 'Для тех, кто запрашивает возврат денег'
 
     async def message_day_1(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Это первая цепочка. Она прилетит через минутку '
-                                                     'после оплаты. Ну или секунд через 30, как решим\n'
-                                                     'Не уходи, я настроила так, чтобы каждая следующая цепочка '
-                                                     'падала секунд через 10 после предыдущей. Ща всё будет.')
+        await bot.send_message(chat_id=chat_id, text='Это первая цепочка. В функцию можно добавить сколько угодно '
+                                                     'сообщений, в том числе с фото, ссылками, файлами, видео и пр.')
 
     async def message_day_2(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Это вторая цепочка. В каждой цепочке сможем кидать столько '
-                                                     'сообщений, сколько надо.')
+        await bot.send_message(chat_id=chat_id, text='Это вторая цепочка.')
 
     async def message_day_3(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Третья цепочка. Файлы и голосовые тоже можем кидать, но это '
-                                                     'немного проблемно, поэтому я бы искренне предпочла давать '
-                                                     'ссылки. Но не обязательно, конечно.')
+        await bot.send_message(chat_id=chat_id, text='Третья цепочка.')
 
     async def message_day_4(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Четвертая цепочка. Уруру.')
+        await bot.send_message(chat_id=chat_id, text='Четвертая цепочка.')
 
     async def message_day_5(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Пятая цепочка. Ляляля')
+        await bot.send_message(chat_id=chat_id, text='Пятая цепочка.')
 
     async def message_day_6(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Шестая цепочка. '
-                                                     'Нам еще надо решить, как будем деньги принимать. ')
+        await bot.send_message(chat_id=chat_id, text='Шестая цепочка.')
 
     async def message_day_7(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Седьмая цепочка. '
-                                                     'Звезды - это модно, конечно, но можно и на сбер ')
+        await bot.send_message(chat_id=chat_id, text='Седьмая цепочка.')
 
     async def message_day_8(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Восьмая цепочка. И надо для бота красивое описание, название '
-                                                     'и картиночку восхитительную')
+        await bot.send_message(chat_id=chat_id, text='Восьмая цепочка.')
 
     async def message_day_9(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Девятая цепочка. Картиночку можно нейросеткам заказать, '
-                                                     'пусть работают.')
+        await bot.send_message(chat_id=chat_id, text='Девятая цепочка.')
 
     async def message_day_10(self, chat_id):
-        await bot.send_message(chat_id=chat_id, text='Десятая цепочка. Последняя (но если надо больше, я без проблем '
-                                                     'нафигачу). Надо еще решить, что после этого сообщения будет. '
-                                                     'Или может, в самом конце этой цепочки благодарность какая-то '
-                                                     'должна быть')
+        await bot.send_message(chat_id=chat_id, text='Десятая цепочка.')
 
     def message_chain(self):
         return [self.message_day_1, self.message_day_2, self.message_day_3, self.message_day_4, self.message_day_5,

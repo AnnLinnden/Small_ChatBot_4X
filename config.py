@@ -13,10 +13,10 @@ load_dotenv()
 TOKEN = getenv("TOKEN")
 ADMINS_LIST = getenv("ADMINS")
 ADMINS = [int(admin_id) for admin_id in ADMINS_LIST.split(',')]
-BREAK_BETWEEN_MESSAGES = timedelta(seconds=10)
-PRODUCT_PRICE = 100
-PRODUCT_NAME = 'Тетрадь на 12 листов'
-PRODUCT_DESCRIPTION = '10 дней = 10 постов для кайфовой зарядки'
+BREAK_BETWEEN_MESSAGES = timedelta(days=1)
+PRODUCT_PRICE = 1
+PRODUCT_NAME = 'Название продукта'
+PRODUCT_DESCRIPTION = 'Описание продукта'
 PAYMENT_EFFECT = "5044134455711629726"
 # "5104841245755180586",  # 🔥
 # "5107584321108051014",  # 👍
