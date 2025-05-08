@@ -13,6 +13,7 @@ load_dotenv()
 TOKEN = getenv("TOKEN")
 ADMINS_LIST = getenv("ADMINS")
 ADMINS = [int(admin_id) for admin_id in ADMINS_LIST.split(',')]
+ADMIN_PANEL_PASS = getenv("ADMIN_PANEL_PASS")
 BREAK_BETWEEN_MESSAGES = timedelta(days=1)  # Перерыв между сообщениями
 PRODUCT_PRICE = 1  # Стоимость вашего продукта
 PRODUCT_NAME = 'Название продукта'

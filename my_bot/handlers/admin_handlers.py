@@ -1,14 +1,14 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from my_bot import db
-from my_bot.config import ADMINS
+from my_bot.config import ADMINS, ADMIN_PANEL_PASS
 from my_bot.keyboards.inline_keys import admin_keyboard
 
 database_manager = db.DatabaseManager()
 admin_router = Router()
 
 
-@admin_router.message(F.text.lower() == 'админка')
+@admin_router.message(F.text.lower() == ADMIN_PANEL_PASS)
 async def greeting_admin(message: Message):
     user_id = message.from_user.id
     if user_id in ADMINS:
