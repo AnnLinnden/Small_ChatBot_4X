@@ -22,7 +22,7 @@ async def buy(message: Message):
         payload=f'payload_{message.chat.id}',  # Идентификатор заказа для нас, клиент его не видит
         currency='XTR',
         provider_token='',  # Оставляем пустым для ТГ Звезд
-        prices=prices,  # Must contain exactly one item for payments in Telegram Stars.
+        prices=prices,  # Кнопка для оплаты с указанием суммы - просто оставьте как есть
     )
 
 
