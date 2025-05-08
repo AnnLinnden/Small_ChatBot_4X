@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.date import DateTrigger
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
-from config import BREAK_BETWEEN_MESSAGES
+from my_bot.config import BREAK_BETWEEN_MESSAGES
 
 
 class ScheduleMessages:

@@ -3,8 +3,8 @@ from aiogram import Router
 from aiogram.filters.command import Command
 from aiogram.types import Message
 
-from keyboards.inline_keys import keyboard_with_links
-from handlers.messages import Messages
+from my_bot.keyboards.inline_keys import keyboard_with_links
+from my_bot.handlers.messages import Messages
 
 user_router = Router()
 messages = Messages()

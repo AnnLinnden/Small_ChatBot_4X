@@ -1,10 +1,10 @@
 from aiogram import F, Router
 from aiogram.types import LabeledPrice, Message, PreCheckoutQuery
 from aiogram.filters.command import Command
-from timing.time_functions import ScheduleMessages
-from config import PRODUCT_PRICE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PAYMENT_EFFECT, bot
-from handlers.messages import Messages
-from db.storage import DatabaseManager
+from my_bot.timing.time_functions import ScheduleMessages
+from my_bot.config import PRODUCT_PRICE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PAYMENT_EFFECT, bot
+from my_bot.handlers.messages import Messages
+from my_bot.db.storage import DatabaseManager
 
 prices = [LabeledPrice(label='XTR', amount=PRODUCT_PRICE)]  # XTR автоматически заменяется на иконку Telegram Star
 payment_router = Router()

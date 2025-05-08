@@ -1,5 +1,4 @@
-from aiogram.utils.chat_action import ChatActionSender
-from config import bot
+from my_bot.config import bot
 
 
 class Messages:

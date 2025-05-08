@@ -1,8 +1,8 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
-import db
-from config import ADMINS
-from keyboards.inline_keys import admin_keyboard
+from my_bot import db
+from my_bot.config import ADMINS
+from my_bot.keyboards.inline_keys import admin_keyboard
 
 database_manager = db.DatabaseManager()
 admin_router = Router()

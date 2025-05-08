@@ -1,4 +1,4 @@
 .env
-db/database.db
+my_bot/db/database.db
 __pycache__
 jobs.sqlite
