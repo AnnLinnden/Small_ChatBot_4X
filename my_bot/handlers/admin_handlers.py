@@ -43,3 +43,27 @@ async def show_earned_money(callback: CallbackQuery):
     else:
         await callback.message.answer(f'Мы заработали {earned_money} ★')
     await callback.answer()
+
+
+@admin_router.message(F.document)  # проверяет, что в бот был отправлен документ, и отдает file_id
+async def handle_document(message: Message):
+    user_id = message.from_user.id
+    if user_id in ADMINS:
+        file_id = message.document.file_id
+        await message.reply(f"File ID: `{file_id}`", parse_mode='Markdown')
+
+
+@admin_router.message(F.photo)
+async def handle_photo(message: Message):
+    user_id = message.from_user.id
+    if user_id in ADMINS:
+        file_id = message.photo[-1].file_id  # У фото несколько размеров, берем file_id самого большого, т.е. последнего
+        await message.reply(f"File ID: `{file_id}`", parse_mode='Markdown')
+
+
+@admin_router.message(F.video)
+async def handle_document(message: Message):
+    user_id = message.from_user.id
+    if user_id in ADMINS:
+        file_id = message.video.file_id
+        await message.reply(f"File ID: `{file_id}`", parse_mode='Markdown')
