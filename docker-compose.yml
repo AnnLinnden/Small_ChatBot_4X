@@ -1,0 +1,26 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: my-redis
+    command: ["redis-server", "--requirepass", "¬¿ÿ œ¿–ŒÀ‹"]
+    ports:
+      - "6379:6379"
+    networks:
+      - my-network
+
+  my-bot:
+    build: .
+    container_name: my-bot
+    depends_on:
+      - redis
+    env_file:
+      - my_bot/.env
+    volumes:
+      - /4XBot/Small_ChatBot4X/my_bot/config.py:/app/my_bot/config.py
+    restart: unless-stopped
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
