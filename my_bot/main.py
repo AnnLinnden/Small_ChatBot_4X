@@ -28,8 +28,9 @@ async def main():
     try:
         await bot.delete_webhook(drop_pending_updates=True)
         await database_manager.initialize_database()
-        await dp.start_polling(bot, skip_updates=True)
         await set_commands()
+        await dp.start_polling(bot, skip_updates=True)
+
     finally:
         await bot.session.close()
 
