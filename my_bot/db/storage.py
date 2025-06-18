@@ -17,7 +17,7 @@ class DatabaseManager:
 
     async def check_user_not_paid_before(self, user_telegram_id: int):
         async with aiosqlite.connect(self.path) as db:
-            cursor = await db.execute("SELECT * FROM users WHERE user_telegram_id = ?", (user_telegram_id, ))
+            cursor = await db.execute("SELECT * FROM users WHERE user_telegram_id = ?", (user_telegram_id,))
             row = await cursor.fetchone()
             if row is None:
                 return True
@@ -49,4 +49,3 @@ class DatabaseManager:
             cursor = await db.execute("SELECT SUM (price) FROM users")
             earned_money = await cursor.fetchone()
             return earned_money[0]
-

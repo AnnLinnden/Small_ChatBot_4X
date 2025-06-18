@@ -7,13 +7,15 @@ from my_bot.config import BREAK_BETWEEN_MESSAGES
 
 class ScheduleMessages:
     def __init__(self):
-        job_storage = {'default': SQLAlchemyJobStore(url='sqlite:///jobs.sqlite')}
+        job_storage = {"default": SQLAlchemyJobStore(url="sqlite:///jobs.sqlite")}
         self.scheduler = AsyncIOScheduler(jobstores=job_storage)
         self.scheduler.start()
 
     def create_list_of_send_dates(self, count_of_days):
         today = datetime.today()
-        send_dates = [today + timedelta(seconds=5)]  # предложение оплатить придет через 5с после стартового сообщения
+        send_dates = [
+            today + timedelta(seconds=5)
+        ]  # предложение оплатить придет через 5с после стартового сообщения
         count_of_days -= 1
         today += BREAK_BETWEEN_MESSAGES
         while count_of_days > 0:
@@ -28,10 +30,8 @@ class ScheduleMessages:
             func=function,
             coalesce=True,
             trigger=DateTrigger(run_date=run_date),
-            kwargs={'chat_id': chat_id}
+            kwargs={"chat_id": chat_id},
         )
 
     def check(self):
         self.scheduler.print_jobs()
-
-
