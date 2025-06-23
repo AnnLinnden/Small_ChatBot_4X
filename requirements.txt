@@ -3,3 +3,4 @@ python-dotenv~=1.0.1
 APScheduler~=3.10.4
 redis~=5.0.8
 aiosqlite~=0.20.0
+uv~=0.7.2
