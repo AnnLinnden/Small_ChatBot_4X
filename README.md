@@ -107,3 +107,15 @@ deactivate
 ```bash
 uv pip install -r requirements.txt
 ```
+
+Проверка синтаксиса:
+
+```bash
+ruff check my_bot
+```
+
+Или проверка с попыткой исправить (сейчас работает на импортах):
+
+```bash
+ruff check my_bot --fix
+```

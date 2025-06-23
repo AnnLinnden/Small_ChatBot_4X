@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
+
+from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.date import DateTrigger
-from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
+
 from my_bot.config import BREAK_BETWEEN_MESSAGES
 
 
@@ -11,7 +13,8 @@ class ScheduleMessages:
         self.scheduler = AsyncIOScheduler(jobstores=job_storage)
         self.scheduler.start()
 
-    def create_list_of_send_dates(self, count_of_days):
+    @staticmethod
+    def create_list_of_send_dates(count_of_days):
         today = datetime.today()
         send_dates = [
             today + timedelta(seconds=5)

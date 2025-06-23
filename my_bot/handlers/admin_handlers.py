@@ -1,7 +1,8 @@
-from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram import F, Router
+from aiogram.types import CallbackQuery, Message
+
 from my_bot import db
-from my_bot.config import ADMINS, ADMIN_PANEL_PASS
+from my_bot.config import ADMIN_PANEL_PASS, ADMINS
 from my_bot.keyboards.inline_keys import admin_keyboard
 
 database_manager = db.DatabaseManager()
@@ -28,8 +29,8 @@ async def show_user_amount(callback: CallbackQuery):
 @admin_router.callback_query(F.data == "buyers_names")
 async def show_buyers_names(callback: CallbackQuery):
     buyers_usernames = await database_manager.get_usernames()
-    if buyers_usernames == []:
-        await callback.message.answer(f"Пока никто не оплатил")
+    if buyers_usernames:
+        await callback.message.answer("Пока никто не оплатил")
     else:
         await callback.message.answer(f"Покупку оформили: {buyers_usernames}")
     await callback.answer()
@@ -45,16 +46,6 @@ async def show_earned_money(callback: CallbackQuery):
     await callback.answer()
 
 
-@admin_router.message(
-    F.document
-)  # проверяет, что в бот был отправлен документ, и отдает file_id
-async def handle_document(message: Message):
-    user_id = message.from_user.id
-    if user_id in ADMINS:
-        file_id = message.document.file_id
-        await message.reply(f"File ID: `{file_id}`", parse_mode="Markdown")
-
-
 @admin_router.message(F.photo)
 async def handle_photo(message: Message):
     user_id = message.from_user.id
@@ -65,9 +56,18 @@ async def handle_photo(message: Message):
         await message.reply(f"File ID: `{file_id}`", parse_mode="Markdown")
 
 
-@admin_router.message(F.video)
+@admin_router.message(F.document | F.video)
 async def handle_document(message: Message):
     user_id = message.from_user.id
-    if user_id in ADMINS:
+
+    if user_id not in ADMINS:
+        return
+
+    if message.document:
+        file_id = message.document.file_id
+    elif message.video:
         file_id = message.video.file_id
-        await message.reply(f"File ID: `{file_id}`", parse_mode="Markdown")
+    else:
+        return  # прислали что-то непонятное
+
+    await message.reply(f"File ID: `{file_id}`", parse_mode="Markdown")

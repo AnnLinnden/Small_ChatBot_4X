@@ -1,13 +1,13 @@
 from datetime import timedelta
 from os import getenv
-from dotenv import load_dotenv
+
+import redis.asyncio as redis
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums.parse_mode import ParseMode
-from aiogram.types import BotCommand, BotCommandScopeDefault
 from aiogram.fsm.storage.redis import RedisStorage
-import redis.asyncio as redis
-
+from aiogram.types import BotCommand, BotCommandScopeDefault
+from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = getenv("TOKEN")
