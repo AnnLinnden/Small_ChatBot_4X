@@ -1,11 +1,12 @@
 import asyncio
 import logging
 from logging.handlers import RotatingFileHandler
+
 from config import bot, dp, set_commands
-from handlers.user_handlers import user_router
-from handlers.admin_handlers import admin_router
-from timing.payments import payment_router
 from db.storage import DatabaseManager
+from handlers.admin_handlers import admin_router
+from handlers.user_handlers import user_router
+from timing.payments import payment_router
 
 database_manager = DatabaseManager()
 logging.basicConfig(

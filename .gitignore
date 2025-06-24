@@ -1,4 +1,6 @@
 .env
+.venv
+.idea/
 my_bot/app.log
 my_bot/db/database.db
 __pycache__

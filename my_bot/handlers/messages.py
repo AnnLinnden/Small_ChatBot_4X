@@ -1,5 +1,7 @@
-from aiogram.types import InputMediaPhoto, FSInputFile
 from asyncio import sleep
+
+from aiogram.types import FSInputFile, InputMediaPhoto
+
 from my_bot.config import bot
 
 
@@ -30,24 +32,26 @@ class Messages:
         )
         # self.money_refund_message = 'Для тех, кто запрашивает возврат денег'
 
+    @staticmethod
     async def send_file(
-        self, chat_id, file_id, file_path, caption
+        chat_id, file_id, file_path, caption
     ):  # отправка файла: .pdf, .png, .docx, .jpg и пр.
         try:
             await bot.send_photo(chat_id=chat_id, photo=file_id, caption=caption)
-        except Exception as e:
+        except Exception:
             file = FSInputFile(file_path)
             await bot.send_photo(chat_id=chat_id, photo=file, caption=caption)
 
+    @staticmethod
     async def send_album(
-        self, chat_id, files_id: list, files_path: list, caption
+        chat_id, files_id: list, files_path: list, caption
     ):  # отправка альбома с .jpg | .png
         album_builder = []
-        for idx, (file_id, file_path) in enumerate(zip(files_id, files_path)):
+        for idx, (file_id, _) in enumerate(zip(files_id, files_path)):
             try:
                 photo = InputMediaPhoto(media=file_id)
                 album_builder.append(photo)
-            except Exception as e:
+            except Exception:
                 photo_file = FSInputFile(files_path[files_id.index(file_id)])
                 photo = InputMediaPhoto(media=photo_file)
                 album_builder.append(photo)
@@ -56,10 +60,11 @@ class Messages:
 
         await bot.send_media_group(chat_id=chat_id, media=album_builder)
 
-    async def send_text(self, chat_id, text):  # отправка текста
+    @staticmethod
+    async def send_text(chat_id, text):  # отправка текста
         try:
             await bot.send_message(chat_id=chat_id, text=text)
-        except Exception as e:
+        except Exception:
             await sleep(10)
             await bot.send_message(chat_id=chat_id, text=text)
         #  Бот использует HTML для форматирования текста. Напомню теги:
@@ -82,7 +87,7 @@ class Messages:
             chat_id=chat_id,
             file_id="AgACAgIAAxkBAAKlZlEoZiQyNnZmM4Q8MjU5Y1Y3ZjNlMmE3NzUwMD",
             file_path="screens/1.jpg",
-            caption=("Это подпись к картинке/файлу. Можно оставить пустой"),
+            caption="Это подпись к картинке/файлу. Можно оставить пустой",
         )
         await self.send_album(
             chat_id=chat_id,

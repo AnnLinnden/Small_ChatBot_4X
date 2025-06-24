@@ -1,0 +1,13 @@
+[project]
+name = "small-chatbot-4x"
+version = "0.1.0"
+description = "Бот контент-агентства 4Х (урезанная, но рабочая версия). По всем вопросам пишите в телеграм автору: https://t.me/AnnLinnden"
+readme = "README.md"
+requires-python = "<=3.12"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+fixable = ["I"]

@@ -1,16 +1,17 @@
 from aiogram import F, Router
-from aiogram.types import LabeledPrice, Message, PreCheckoutQuery
 from aiogram.filters.command import Command
-from my_bot.timing.time_functions import ScheduleMessages
+from aiogram.types import LabeledPrice, Message, PreCheckoutQuery
+
 from my_bot.config import (
-    PRODUCT_PRICE,
-    PRODUCT_NAME,
-    PRODUCT_DESCRIPTION,
     PAYMENT_EFFECT,
+    PRODUCT_DESCRIPTION,
+    PRODUCT_NAME,
+    PRODUCT_PRICE,
     bot,
 )
-from my_bot.handlers.messages import Messages
 from my_bot.db.storage import DatabaseManager
+from my_bot.handlers.messages import Messages
+from my_bot.timing.time_functions import ScheduleMessages
 
 prices = [
     LabeledPrice(label="XTR", amount=PRODUCT_PRICE)
