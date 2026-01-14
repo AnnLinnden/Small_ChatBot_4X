@@ -2,6 +2,7 @@ services:
   redis:
     image: redis:latest
     container_name: my-redis
+    restart: always
     command: ["redis-server", "--requirepass", "ВАШ ПАРОЛЬ"]
     ports:
       - "6379:6379"
